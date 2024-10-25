@@ -4,13 +4,12 @@ const { client } = require("../config/db");
 
 const usersCollection = client.db("LaptopGallery").collection("laptop");
 
-// Fetch all users
+// Fetch all laptop
 router.get("/", async (req, res) => {
   const result = await usersCollection.find().toArray();
   res.send(result);
 });
 
- 
  
 
 
