@@ -2,11 +2,12 @@ const express = require("express");
 const router = express.Router();
 const { client } = require("../config/db");
 
-const usersCollection = client.db("LaptopGallery").collection("laptop");
+const LaptopCollection = client.db("LaptopGallery").collection("laptop");
 
 // Fetch all laptop
-router.get("/", async (req, res) => {
-  const result = await usersCollection.find().toArray();
+
+router.get("/laptops", async (req, res) => {
+  const result = await LaptopCollection.find().toArray();
   res.send(result);
 });
 

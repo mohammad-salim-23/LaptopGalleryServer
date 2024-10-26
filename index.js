@@ -35,7 +35,15 @@ app.use(express.urlencoded({ extended: true }));
 // Connect to the database
 connectDB();
 
-
+    // jwt related api
+    app.post("/jwt", async (req, res) => {
+      const user = req.body;
+      console.log("jwt...", user);
+      const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: "1h",
+      });
+      res.send({ token });
+    });
 // Use routes
 app.use("/laptop", laptopRoutes);
 
