@@ -5,7 +5,7 @@ const { client } = require("../config/db");
 const LaptopCollection = client.db("LaptopGallery").collection("laptop");
 
 // Fetch all laptop
-router.post("/laptops", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const newLaptop = req.body;
     const result = await LaptopCollection.insertOne(newLaptop);
@@ -16,7 +16,7 @@ router.post("/laptops", async (req, res) => {
   }
 });
 
-router.get("/laptops", async (req, res) => {
+router.get("/", async (req, res) => {
   const result = await LaptopCollection.find().toArray();
   res.send(result);
 });
