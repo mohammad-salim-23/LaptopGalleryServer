@@ -1,15 +1,12 @@
 const express = require("express");
 const cors = require("cors");
-
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const { connectDB } = require("./config/db");
 
 const http = require("http");
-const laptopRoutes = require("./routes/laptop");
 const userRoutes = require("./routes/users")
-
-
+const productsRoutes = require("./routes/products")
 
 
 
@@ -37,25 +34,27 @@ app.use(express.urlencoded({ extended: true }));
 // Connect to the database
 connectDB();
 
-    // jwt related api
-    app.post("/jwt", async (req, res) => {
-      const user = req.body;
-      console.log("jwt...", user);
-      const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: "1h",
-      });
-      res.send({ token });
-    });
+// jwt related api
+// app.post("/jwt", async (req, res) => {
+//   const user = req.body;
+//   console.log("jwt...", user);
+//   const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+//     expiresIn: "1h",
+//   });
+//   res.send({ token });
+// });
+
+
 // Use routes
-app.use("/laptop", laptopRoutes);
-app.use("/users",userRoutes);
+app.use("/users", userRoutes);
+app.use("/products", productsRoutes);
 
 // Root endpoint
 app.get("/", (req, res) => {
   res.send("LaptopGallery Server Running");
 });
 
- 
+
 
 
 // Start the server
