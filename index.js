@@ -7,6 +7,7 @@ const { connectDB } = require("./config/db");
 const http = require("http");
 const userRoutes = require("./routes/users")
 const productsRoutes = require("./routes/products")
+const cartRoutes = require("./routes/cart")
 
 
 
@@ -48,6 +49,7 @@ connectDB();
 // Use routes
 app.use("/users", userRoutes);
 app.use("/products", productsRoutes);
+app.use("/cart", cartRoutes);
 
 // Root endpoint
 app.get("/", (req, res) => {

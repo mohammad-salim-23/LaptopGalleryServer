@@ -7,8 +7,7 @@ const productsCollection = client.db("LaptopGallery").collection("products");
 
 // Show All Laptop or Mobile or All Products
 router.get('/', async (req, res) => {
-  const { type, graphics, storage, ram, processor, model, brand } = req.query;  // Get multiple query parameters
-
+  const { type, graphics, storage, ram, processor, model, brand } = req.query;   
   // Create a dynamic filter object based on the query parameters
   const filter = {};
 
@@ -59,7 +58,7 @@ router.delete('/:id', async (req, res) => {
 // Admin Dashboard Laptop update
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
-  console.log(id)
+  // console.log(id)
   const query = { _id: new ObjectId(id) };
   const result = await productsCollection.findOne(query);
   res.send(result);
@@ -76,7 +75,6 @@ router.put('/:id', async (req, res) => {
   if (!ObjectId.isValid(id)) {
     return res.status(400).send({ error: 'Invalid ID format' });
   }
-
   const filter = { _id: new ObjectId(id) };
   const options = { upsert: true };
   const updateDoc = {
@@ -91,7 +89,10 @@ router.put('/:id', async (req, res) => {
       color: products.color,
       operating_System: products.operating_System,
       price: products.price,
-      image: products.image,
+      mobileBattery: products.mobileBattery,
+      camera: products.camera,
+      displayType: products.displayType,
+      displaySize: products.displaySize,
       status: products.status,
     },
   };
@@ -103,8 +104,6 @@ router.put('/:id', async (req, res) => {
     res.status(500).send({ error: 'An error occurred while updating the product.' });
   }
 });
-
-
 
 
 module.exports = router;
