@@ -1,16 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const { client } = require("../config/db");
+const { ObjectId } = require("mongodb");
 
 const productsCollection = client.db("LaptopGallery").collection("products");
 
 // show all products Data
 router.get("/", async (req, res) => {
-    const result = await productsCollection.find().toArray();
-    res.send(result);
-  });
-  
-   
+  const result = await productsCollection.find().toArray();
+  res.send(result);
+});
+
+
 
 
 // Add a new laptop
@@ -25,4 +26,11 @@ router.get("/", async (req, res) => {
 //   }
 // });
 
+
+router.get("/:id", async (req, res) => {
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id) };
+  const result = await productsCollection.findOne(query);
+  res.send(result);
+});
 module.exports = router;
