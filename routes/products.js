@@ -14,15 +14,15 @@ router.get("/", async (req, res) => {
 
 
 // Add a new laptop
-// router.post("/", async (req, res) => {
-//   try {
-//     const newLaptop = req.body;
-//     const result = await productsCollection.insertOne(newLaptop);
-//     res.status(201).send({ laptopId: result.insertedId });
-//   } catch (error) {
-//     console.error("Error adding laptop:", error);
-//     res.status(500).send();
-//   }
-// });
+router.post("/", async (req, res) => {
+  try {
+    const newLaptop = req.body;
+    const result = await productsCollection.insertOne(newLaptop);
+    res.status(201).send({ laptopId: result.insertedId });
+  } catch (error) {
+    console.error("Error adding laptop:", error);
+    res.status(500).send();
+  }
+});
 
 module.exports = router;
