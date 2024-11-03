@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { client } = require("../config/db");
+const { ObjectId } = require("mongodb");
 
 const cartsCollection = client.db("LaptopGallery").collection("carts");
 
@@ -16,5 +17,24 @@ router.post("/", async (req, res) => {
     res.status(500).send();
   }
 });
+
+router.get('/', async (req, res) => {
+  const cartInfo = await cartsCollection.find(req.body).toArray();
+  res.send(cartInfo)
+})
+
+router.get('/', async (req, res) => {
+  const email = req.query.email
+  const query = { email: email }
+  const result = await cartsCollection.find(query).toArray();
+  res.send(result)
+})
+
+router.delete('/:id', async (req, res) => {
+  const id = req.params.id;
+  const query = { _id: new ObjectId(id) };
+  const result = await cartsCollection.deleteOne(query);
+  res.send(result);
+})
 
 module.exports = router;
