@@ -1,13 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
 const { connectDB } = require("./config/db");
 
 const http = require("http");
 const userRoutes = require("./routes/users")
 const productsRoutes = require("./routes/products")
-
+const cartRoutes = require("./routes/cart")
+const reviewRoutes = require("./routes/review")
 
 
 const app = express();
@@ -48,6 +49,8 @@ connectDB();
 // Use routes
 app.use("/users", userRoutes);
 app.use("/products", productsRoutes);
+app.use("/cart", cartRoutes);
+app.use("/review", reviewRoutes);
 
 // Root endpoint
 app.get("/", (req, res) => {
