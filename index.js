@@ -9,7 +9,7 @@ const userRoutes = require("./routes/users")
 const productsRoutes = require("./routes/products")
 const cartRoutes = require("./routes/cart")
 const reviewRoutes = require("./routes/review")
-
+const compareRoutes = require("./routes/Compare")
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -51,6 +51,7 @@ app.use("/users", userRoutes);
 app.use("/products", productsRoutes);
 app.use("/cart", cartRoutes);
 app.use("/review", reviewRoutes);
+app.use("/compare", compareRoutes);
 
 // Root endpoint
 app.get("/", (req, res) => {
