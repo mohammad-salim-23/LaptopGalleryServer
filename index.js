@@ -8,6 +8,7 @@ const http = require("http");
 const userRoutes = require("./routes/users")
 const productsRoutes = require("./routes/products")
 const cartRoutes = require("./routes/cart")
+const paymentRoutes = require("./routes/payment")
 
 
 
@@ -50,6 +51,7 @@ connectDB();
 app.use("/users", userRoutes);
 app.use("/products", productsRoutes);
 app.use("/cart", cartRoutes);
+app.use("/payment", paymentRoutes);
 
 // Root endpoint
 app.get("/", (req, res) => {
