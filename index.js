@@ -11,6 +11,8 @@ const cartRoutes = require("./routes/cart")
 const paymentRoutes = require("./routes/payment")
 
 
+const reviewRoutes = require("./routes/review")
+const compareRoutes = require("./routes/Compare")
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -52,6 +54,8 @@ app.use("/users", userRoutes);
 app.use("/products", productsRoutes);
 app.use("/cart", cartRoutes);
 app.use("/payment", paymentRoutes);
+app.use("/review", reviewRoutes);
+app.use("/compare", compareRoutes);
 
 // Root endpoint
 app.get("/", (req, res) => {
