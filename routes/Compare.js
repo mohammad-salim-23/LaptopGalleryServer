@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { client } = require("../config/db");
+const { ObjectId } = require("mongodb");
 
 
 const compareCollection = client.db("LaptopGallery").collection("compare");
@@ -24,7 +25,12 @@ router.post('/', async (req, res) => {
 })
 
 
-
+router.delete('/:id', async (req, res) => {
+  const id = req.params.id;
+  const query = { _id: (id) };
+  const result = await compareCollection.deleteOne(query);
+  res.send(result);
+})
 
 
 
