@@ -16,6 +16,7 @@ const cartsCollection = client.db("LaptopGallery").collection("carts");
 const paymentsCollection = client.db("LaptopGallery").collection("payments");
 const productsCollection = client.db("LaptopGallery").collection("products");
 
+
 // Payment Api
 router.post("/", async (req, res) => {
     const { productIds, firstName, lastName, streetAddress, division, district, zipCode, phone, email } = req.body;
@@ -270,7 +271,11 @@ router.post("/cancel/:tranId", async (req, res) => {
     }
 })
 
-
-
+router.get("/", async (req, res) => {
+    const result = await paymentsCollection.find().toArray();
+ 
+    res.send(result);
+  });
+  
 
 module.exports = router;
