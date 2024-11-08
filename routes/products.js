@@ -7,7 +7,7 @@ const productsCollection = client.db("LaptopGallery").collection("products");
 
 // Show All Laptop or Mobile or All Products
 router.get('/', async (req, res) => {
-  const { type, graphics, storage, ram, processor, model, brand } = req.query;   
+  const { type, graphics, storage, ram, processor, model, brand } = req.query;
   // Create a dynamic filter object based on the query parameters
   const filter = {};
 
@@ -103,6 +103,15 @@ router.put('/:id', async (req, res) => {
   } catch (error) {
     res.status(500).send({ error: 'An error occurred while updating the product.' });
   }
+});
+
+// Category wise filtering
+
+router.get("/category/:categoryName", async (req, res) => {
+  const result = await productsCollection
+    .find({ category: req.params.categoryName })
+    .toArray();
+  res.send(result);
 });
 
 
