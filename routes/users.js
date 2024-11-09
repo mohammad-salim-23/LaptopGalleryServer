@@ -2,16 +2,17 @@ const express = require("express");
 const router = express.Router();
 const { client } = require("../config/db");
 const { ObjectId } = require('mongodb');
+const { verifyToken, verifyAdmin } = require("../middleware/auth");
 
 const usersCollection = client.db("LaptopGallery").collection("users");
 
 // Show all Users
-router.get("/", async (req, res) => {
+router.get("/",  async (req, res) => {
   const result = await usersCollection.find().toArray();
   res.send(result);
 });
 
-
+// User account create
 router.post('/', async (req, res) => {
   const user = req.body;
   user.status = 'user';
@@ -28,7 +29,7 @@ router.post('/', async (req, res) => {
 
 
 // Admin Check Api (valid Admin Or UnValid Admin)
-router.get('/admin/:email', async (req, res) => {
+router.get('/admin/:email',  async (req, res) => {
   const email = req.params.email;
   // console.log(email)
   const query = { email: email }
@@ -44,7 +45,7 @@ router.get('/admin/:email', async (req, res) => {
 
 
 // Dashboard users delete
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',  async (req, res) => {
   const id = req.params.id;
   const query = { _id: new ObjectId(id) };
   const result = await usersCollection.deleteOne(query);
