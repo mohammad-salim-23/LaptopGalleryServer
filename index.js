@@ -26,7 +26,8 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "http://localhost:5174"
+      "http://localhost:5174",
+      "https://laptop-gallery.netlify.app"
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
