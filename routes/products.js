@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { client } = require("../config/db");
 const { ObjectId } = require('mongodb');
+const { verifyToken, verifyAdmin } = require("../middleware/auth");
 
 const productsCollection = client.db("LaptopGallery").collection("products");
 
@@ -48,7 +49,7 @@ router.post('/', async (req, res) => {
 });
 
 // Dashboard Laptop delete
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',async (req, res) => {
   const id = req.params.id;
   const query = { _id: new ObjectId(id) };
   const result = await productsCollection.deleteOne(query);
@@ -65,8 +66,7 @@ router.get("/:id", async (req, res) => {
 });
 
 
-// const { ObjectId } = require('mongodb');
-
+// ?Update Products
 router.put('/:id', async (req, res) => {
   const { id } = req.params;
   const products = req.body;
@@ -79,21 +79,20 @@ router.put('/:id', async (req, res) => {
   const options = { upsert: true };
   const updateDoc = {
     $set: {
+      title: products.title,
       brand: products.brand,
       model: products.model,
       processor: products.processor,
       ram: products.ram,
       storage: products.storage,
-      graphics: products.graphics,
       display: products.display,
       color: products.color,
       operating_System: products.operating_System,
       price: products.price,
-      mobileBattery: products.mobileBattery,
-      camera: products.camera,
-      displayType: products.displayType,
-      displaySize: products.displaySize,
+      regularPrice: products.regularPrice,
       status: products.status,
+      description: products.description,
+      warranty: products.warranty,
     },
   };
 

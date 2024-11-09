@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-// const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const { connectDB } = require("./config/db");
 
 const http = require("http");
@@ -39,14 +39,22 @@ app.use(express.urlencoded({ extended: true }));
 // Connect to the database
 connectDB();
 
-// jwt related api
+
 // app.post("/jwt", async (req, res) => {
-//   const user = req.body;
-//   console.log("jwt...", user);
-//   const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-//     expiresIn: "1h",
-//   });
-//   res.send({ token });
+//   try {
+//     const user = req.body;
+//     if (!user || !user.email) {
+//       return res.status(400).send({ message: 'Missing user data' });
+//     }
+
+//     const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+//       expiresIn: "1h",
+//     });
+//     res.send({ token });
+//   } catch (error) {
+//     console.error("Error generating JWT token:", error);
+//     res.status(500).send({ message: 'Internal Server Error' });
+//   }
 // });
 
 
