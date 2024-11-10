@@ -18,26 +18,38 @@ const verifyToken = (req, res, next) => {
 }
 
 
+// const verifyAdmin = async (req, res, next) => {
+//   try {
+//     const email = req.decoded.email;
+//     console.log("admin email test",email)
+//     const query = { email: email };
+//     const user = await usersCollection.findOne(query);
+//     console.log("User found:", user); // Log the user data to check
+
+//     if (!user) {
+//       return res.status(401).send({ message: 'User not found' });
+//     }
+
+//     const isAdmin = user?.status === 'admin';
+//     if (!isAdmin) {
+//       return res.status(403).send({ message: 'Forbidden access' });
+//     }
+//     next();
+//   } catch (error) {
+//     console.error("Error verifying admin:", error);
+//     return res.status(500).send({ message: 'Internal Server Error' });
+//   }
+// }
+
 const verifyAdmin = async (req, res, next) => {
-  try {
-    const email = req.decoded.email;
-    const query = { email: email };
-    const user = await usersCollection.findOne(query);
-    console.log("User found:", user); // Log the user data to check
-
-    if (!user) {
-      return res.status(401).send({ message: 'User not found' });
-    }
-
-    const isAdmin = user?.status === 'admin';
-    if (!isAdmin) {
-      return res.status(403).send({ message: 'Forbidden access' });
-    }
-    next();
-  } catch (error) {
-    console.error("Error verifying admin:", error);
-    return res.status(500).send({ message: 'Internal Server Error' });
+  const email = req.decoded.email;
+  const query = { email: email };
+  const user = await usersCollection.findOne(query);
+  const isAdmin = user?.status === 'admin';
+  if (!isAdmin) {
+    return res.status(403).send({ message: 'forbidden access true' });
   }
+  next();
 }
 
 

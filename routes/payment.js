@@ -51,9 +51,9 @@ router.post("/", async (req, res) => {
         total_amount: totalPrice,
         currency: 'BDT',
         tran_id: tranId, // use unique tran_id for each api call
-        success_url: `http://localhost:5000/payment/success/${tranId}`,
-        fail_url: `http://localhost:5000/payment/fail/${tranId}`,
-        cancel_url: `http://localhost:5000/payment/cancel/${tranId}`,
+        success_url: `http://https://laptop-gallery-server-nine.vercel.app/payment/success/${tranId}`,
+        fail_url: `http://https://laptop-gallery-server-nine.vercel.app/payment/fail/${tranId}`,
+        cancel_url: `http://https://laptop-gallery-server-nine.vercel.app/payment/cancel/${tranId}`,
         ipn_url: 'http://localhost:3030/ipn',
         shipping_method: 'Courier',
         product_name: 'Computer.',
@@ -236,7 +236,7 @@ router.post("/success/:tranId", async (req, res) => {
 
 
         // Redirect the user to the success page
-        res.redirect(`http://localhost:5173/payment/success/${tranId}`);
+        res.redirect(`https://laptop-gallery.netlify.app/payment/success/${tranId}`);
     }
 });
 
@@ -252,7 +252,7 @@ router.post("/fail/:tranId", async (req, res) => {
             }
         })
     if (result.modifiedCount > 0) {
-        res.redirect(`http://localhost:5173/payment/fail/${req.params.tranId}`)
+        res.redirect(`https://laptop-gallery.netlify.app/payment/fail/${req.params.tranId}`)
     }
 })
 
@@ -267,7 +267,7 @@ router.post("/cancel/:tranId", async (req, res) => {
             }
         })
     if (result.modifiedCount > 0) {
-        res.redirect(`http://localhost:5173/payment/cancel/${req.params.tranId}`)
+        res.redirect(`https://laptop-gallery.netlify.app/payment/cancel/${req.params.tranId}`)
     }
 })
 
