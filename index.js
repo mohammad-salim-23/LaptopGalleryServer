@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
-require("dotenv").config();
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 const { connectDB } = require("./config/db");
 
 const http = require("http");
@@ -55,6 +55,17 @@ connectDB();
 //     res.status(500).send({ message: 'Internal Server Error' });
 //   }
 // });
+
+
+app.post("/jwt", async (req, res) => {
+  const user = req.body;
+  console.log("jwt...test", user);
+  const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: "1h",
+  });
+  console.log("check Token", token)
+  res.send({ token });
+});
 
 
 // Use routes
