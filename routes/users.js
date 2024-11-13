@@ -42,6 +42,35 @@ router.get('/admin/:email', verifyToken, verifyAdmin, async (req, res) => {
 })
 
 
+// Make Admin / user 
+router.patch("/:id", async (req, res) => {
+  const id = req.params.id;
+  const { status } = req.body;
+
+  const filter = { _id: new ObjectId(id) };
+
+  // Construct the update document
+  const updateDoc = {
+    $set: {
+      status,
+    },
+  };
+
+  try {
+    const result = await usersCollection.updateOne(filter, updateDoc);
+    if (result.modifiedCount === 0) {
+      return res
+        .status(404)
+        .send({ message: "User not found or no changes made" });
+    }
+    res.send(result);
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).send({ message: "An error occurred", error });
+  }
+});
+
+
 
 
 // Dashboard users delete

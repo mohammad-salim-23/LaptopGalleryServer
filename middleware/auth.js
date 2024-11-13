@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const usersCollection = client.db("LaptopGallery").collection("users");
 
 const verifyToken = (req, res, next) => {
-  console.log("Authorization Header:", req.headers.authorization);
+  // console.log("Authorization Header:", req.headers.authorization);
   if (!req.headers.authorization) {
     return res.status(401).send({ message: 'unauthorized access' })
   }
