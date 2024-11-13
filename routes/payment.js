@@ -29,10 +29,8 @@ router.post("/", async (req, res) => {
     const cart = await cartsCollection.find(query).toArray();
     // Calculate all price
     const total = cart.reduce((total, item) => {
-        const itemPrice = parseFloat(item.price) || 0;
-        const itemQuantity = item.quantity || 0;
-        const itemTotal = itemPrice * itemQuantity;
-        return total + itemTotal;
+        const price = parseInt(item.price.replace(' BDT', '').replace(',', '')); // Removing ' BDT' and commas
+        return total + price;
     }, 0);
     // Shipping Amount
     const shipping = 120;
@@ -95,11 +93,13 @@ router.post("/", async (req, res) => {
             transactionId: tranId,
             cusEmail: email,
             date: new Date(date),
-            cusName: `${firstName}${lastName}`,
+            // cusName: `${firstName}${lastName}`,
             cusPhone: phone,
             paidStatues: false
 
         }
+        console.log("final",finalOrderDataSave)
+
         const result = paymentsCollection.insertOne(finalOrderDataSave)
 
         const deleteResult = cartsCollection.deleteMany(query)
@@ -236,7 +236,7 @@ router.post("/success/:tranId", async (req, res) => {
 
 
         // Redirect the user to the success page
-        res.redirect(`https://laptop-gallery.netlify.app/payment/success/${tranId}`);
+        res.redirect(`http://https://laptop-gallery-server-nine.vercel.app/payment/success/${tranId}`);
     }
 });
 

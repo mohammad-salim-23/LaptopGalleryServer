@@ -7,7 +7,7 @@ const { verifyToken, verifyAdmin } = require("../middleware/auth");
 const usersCollection = client.db("LaptopGallery").collection("users");
 
 // Show all Users
-router.get("/", verifyToken,verifyAdmin, async (req, res) => {
+router.get("/", verifyToken, verifyAdmin, async (req, res) => {
   const result = await usersCollection.find().toArray();
   res.send(result);
 });
@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 
 
 // Admin Check Api (valid Admin Or UnValid Admin)
-router.get('/admin/:email', verifyToken,verifyAdmin,   async (req, res) => {
+router.get('/admin/:email', verifyToken,  async (req, res) => {
   const email = req.params.email;
   // console.log(email)
   const query = { email: email }
@@ -42,10 +42,39 @@ router.get('/admin/:email', verifyToken,verifyAdmin,   async (req, res) => {
 })
 
 
+// Make Admin / user 
+router.patch("/:id", async (req, res) => {
+  const id = req.params.id;
+  const { status } = req.body;
+
+  const filter = { _id: new ObjectId(id) };
+
+  // Construct the update document
+  const updateDoc = {
+    $set: {
+      status,
+    },
+  };
+
+  try {
+    const result = await usersCollection.updateOne(filter, updateDoc);
+    if (result.modifiedCount === 0) {
+      return res
+        .status(404)
+        .send({ message: "User not found or no changes made" });
+    }
+    res.send(result);
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).send({ message: "An error occurred", error });
+  }
+});
+
+
 
 
 // Dashboard users delete
-router.delete('/:id', verifyToken,verifyAdmin,   async (req, res) => {
+router.delete('/:id', verifyToken, verifyAdmin, async (req, res) => {
   const id = req.params.id;
   const query = { _id: new ObjectId(id) };
   const result = await usersCollection.deleteOne(query);

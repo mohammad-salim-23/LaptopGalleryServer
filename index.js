@@ -63,7 +63,7 @@ app.post("/jwt", async (req, res) => {
   const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
     expiresIn: "1h",
   });
-  console.log("check Token", token)
+  // console.log("check Token", token)
   res.send({ token });
 });
 
