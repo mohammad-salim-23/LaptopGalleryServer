@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 
 
 // Admin Check Api (valid Admin Or UnValid Admin)
-router.get('/admin/:email', verifyToken, verifyAdmin, async (req, res) => {
+router.get('/admin/:email', verifyToken, async (req, res) => {
   const email = req.params.email;
   // console.log(email)
   const query = { email: email }
