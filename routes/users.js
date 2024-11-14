@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 
 
 // Admin Check Api (valid Admin Or UnValid Admin)
-router.get('/admin/:email', verifyToken,  async (req, res) => {
+router.get('/admin/:email', async (req, res) => {
   const email = req.params.email;
   // console.log(email)
   const query = { email: email }
@@ -43,7 +43,7 @@ router.get('/admin/:email', verifyToken,  async (req, res) => {
 
 
 // Make Admin / user 
-router.patch("/:id", async (req, res) => {
+router.patch("/:id",verifyToken, verifyAdmin, async (req, res) => {
   const id = req.params.id;
   const { status } = req.body;
 
