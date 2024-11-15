@@ -49,15 +49,15 @@ router.post("/", async (req, res) => {
         total_amount: totalPrice,
         currency: 'BDT',
         tran_id: tranId, // use unique tran_id for each api call
-        success_url: `https://laptop-gallery-server-nine.vercel.app/payment/success/${tranId}`,
-        fail_url: `https://laptop-gallery-server-nine.vercel.app/payment/fail/${tranId}`,
-        cancel_url: `https://laptop-gallery-server-nine.vercel.app/payment/cancel/${tranId}`,
+        success_url: `http://localhost:5000/payment/success/${tranId}`,
+        fail_url: `http://localhost:5000/payment/fail/${tranId}`,
+        cancel_url: `http://localhost:5000/payment/cancel/${tranId}`,
         ipn_url: 'http://localhost:3030/ipn',
         shipping_method: 'Courier',
         product_name: 'Computer.',
         product_category: 'Electronic',
         product_profile: 'general',
-        cus_name: `${firstName} ${lastName}`,
+        cus_name: `${firstName}`,
         cus_email: email,
         cus_add1: streetAddress,
         cus_add2: district,
@@ -75,7 +75,7 @@ router.post("/", async (req, res) => {
         ship_postcode: 1000,
         ship_country: 'Bangladesh',
     };
-    // console.log(data)
+    console.log(data)
 
     const sslcz = new SSLCommerzPayment(store_id, store_passwd, is_live)
     sslcz.init(data).then(apiResponse => {
@@ -83,18 +83,34 @@ router.post("/", async (req, res) => {
         let GatewayPageURL = apiResponse.GatewayPageURL
         res.send({ url: GatewayPageURL })
 
-
-        const date = new Date().toLocaleString("en-US", {
+        // Date & Time 
+        const options = {
             timeZone: "Asia/Dhaka",
-        });
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+        };
+        const formatter = new Intl.DateTimeFormat("en-GB", options);
+        const date = new Date();
+        const formattedDate = formatter.format(date).split(", ");
+        const time = formattedDate[1];
+        const datePart = formattedDate[0];
+
         const finalOrderDataSave = {
             cart,
             totalAmount: totalPrice,
             transactionId: tranId,
             cusEmail: email,
-            date: new Date(date),
-            // cusName: `${firstName}${lastName}`,
+            date: ` ${datePart} : ${time}`,
+            cusName: `${firstName}`,
             cusPhone: phone,
+            streetAddress: streetAddress,
+            district: district,
+            division: division,
+            zipCode: zipCode,
             paidStatues: false
 
         }
@@ -236,7 +252,7 @@ router.post("/success/:tranId", async (req, res) => {
 
 
         // Redirect the user to the success page
-        res.redirect(`https://laptop-gallery.netlify.app/payment/success/${tranId}`);
+        res.redirect(`http://localhost:5173/payment/success/${tranId}`);
     }
 });
 
@@ -248,11 +264,11 @@ router.post("/fail/:tranId", async (req, res) => {
     },
         {
             $set: {
-                paidStatues: "failed",
+                paidStatues: false,
             }
         })
     if (result.modifiedCount > 0) {
-        res.redirect(`https://laptop-gallery.netlify.app/payment/fail/${req.params.tranId}`)
+        res.redirect(`http://localhost:5173/payment/fail/${req.params.tranId}`)
     }
 })
 
@@ -267,7 +283,7 @@ router.post("/cancel/:tranId", async (req, res) => {
             }
         })
     if (result.modifiedCount > 0) {
-        res.redirect(`https://laptop-gallery.netlify.app/payment/cancel/${req.params.tranId}`)
+        res.redirect(`http://localhost:5173/payment/cancel/${req.params.tranId}`)
     }
 })
 
