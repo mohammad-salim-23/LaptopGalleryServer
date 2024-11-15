@@ -13,7 +13,7 @@ router.post("/", async (req, res) => {
     const result = await cartsCollection.insertOne(cart);
     res.send(result)
   } catch (error) {
-    console.error("Error adding laptop:", error);
+    // console.error("Error adding laptop:", error);
     res.status(500).send();
   }
 });

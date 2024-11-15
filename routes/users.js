@@ -65,7 +65,7 @@ router.patch("/:id",verifyToken, verifyAdmin, async (req, res) => {
     }
     res.send(result);
   } catch (error) {
-    console.error("Error updating user:", error);
+    // console.error("Error updating user:", error);
     res.status(500).send({ message: "An error occurred", error });
   }
 });

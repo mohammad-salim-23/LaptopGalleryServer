@@ -49,9 +49,9 @@ router.post("/", async (req, res) => {
         total_amount: totalPrice,
         currency: 'BDT',
         tran_id: tranId, // use unique tran_id for each api call
-        success_url: `http://localhost:5000/payment/success/${tranId}`,
-        fail_url: `http://localhost:5000/payment/fail/${tranId}`,
-        cancel_url: `http://localhost:5000/payment/cancel/${tranId}`,
+        success_url: `https://laptop-gallery-server-nine.vercel.app/payment/success/${tranId}`,
+        fail_url: `https://laptop-gallery-server-nine.vercel.app/payment/fail/${tranId}`,
+        cancel_url: `https://laptop-gallery-server-nine.vercel.app/payment/cancel/${tranId}`,
         ipn_url: 'http://localhost:3030/ipn',
         shipping_method: 'Courier',
         product_name: 'Computer.',
@@ -75,7 +75,7 @@ router.post("/", async (req, res) => {
         ship_postcode: 1000,
         ship_country: 'Bangladesh',
     };
-    console.log(data)
+    // console.log(data)
 
     const sslcz = new SSLCommerzPayment(store_id, store_passwd, is_live)
     sslcz.init(data).then(apiResponse => {
@@ -114,13 +114,13 @@ router.post("/", async (req, res) => {
             paidStatues: false
 
         }
-        console.log("final", finalOrderDataSave)
+        // console.log("final", finalOrderDataSave)
 
         const result = paymentsCollection.insertOne(finalOrderDataSave)
 
         const deleteResult = cartsCollection.deleteMany(query)
 
-        console.log('Redirecting to: ', GatewayPageURL)
+        // console.log('Redirecting to: ', GatewayPageURL)
     });
 
 
@@ -245,14 +245,14 @@ router.post("/success/:tranId", async (req, res) => {
                 if (error) {
                     console.log("Error sending email:", error);
                 } else {
-                    console.log("Email sent successfully:", info.response);
+                    // console.log("Email sent successfully:", info.response);
                 }
             });
         }
 
 
         // Redirect the user to the success page
-        res.redirect(`http://localhost:5173/payment/success/${tranId}`);
+        res.redirect(`https://laptop-gallery.netlify.app/payment/success/${tranId}`);
     }
 });
 
@@ -268,7 +268,7 @@ router.post("/fail/:tranId", async (req, res) => {
             }
         })
     if (result.modifiedCount > 0) {
-        res.redirect(`http://localhost:5173/payment/fail/${req.params.tranId}`)
+        res.redirect(`https://laptop-gallery.netlify.app/payment/fail/${req.params.tranId}`)
     }
 })
 
@@ -283,7 +283,7 @@ router.post("/cancel/:tranId", async (req, res) => {
             }
         })
     if (result.modifiedCount > 0) {
-        res.redirect(`http://localhost:5173/payment/cancel/${req.params.tranId}`)
+        res.redirect(`https://laptop-gallery.netlify.app/payment/cancel/${req.params.tranId}`)
     }
 })
 
