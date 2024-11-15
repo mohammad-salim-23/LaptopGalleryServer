@@ -272,7 +272,7 @@ router.post("/cancel/:tranId", async (req, res) => {
 })
 
 router.get("/", async (req, res) => {
-    const result = await paymentsCollection.find().toArray();
+    const result = await paymentsCollection.find().sort({ _id: -1 }).toArray();
 
     res.send(result);
 });

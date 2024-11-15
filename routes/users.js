@@ -8,7 +8,7 @@ const usersCollection = client.db("LaptopGallery").collection("users");
 
 // Show all Users
 router.get("/", verifyToken, verifyAdmin, async (req, res) => {
-  const result = await usersCollection.find().toArray();
+  const result = await usersCollection.find().sort({ _id: -1 }).toArray();
   res.send(result);
 });
 
