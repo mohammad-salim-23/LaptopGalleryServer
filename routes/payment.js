@@ -236,7 +236,7 @@ router.post("/success/:tranId", async (req, res) => {
 
 
         // Redirect the user to the success page
-        res.redirect(`http://https://laptop-gallery-server-nine.vercel.app/payment/success/${tranId}`);
+        res.redirect(`http://laptop-gallery-server-nine.vercel.app/payment/success/${tranId}`);
     }
 });
 
