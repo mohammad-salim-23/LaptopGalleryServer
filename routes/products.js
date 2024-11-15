@@ -106,10 +106,8 @@ router.put('/:id', async (req, res) => {
 
 // Category wise filtering
 
-router.get("/category/:categoryName", async (req, res) => {
-  const result = await productsCollection
-    .find({ category: req.params.categoryName })
-    .toArray();
+router.get("/subCategory", async (req, res) => {
+  const result = await productsCollection.find().toArray();
   res.send(result);
 });
 

@@ -49,9 +49,9 @@ router.post("/", async (req, res) => {
         total_amount: totalPrice,
         currency: 'BDT',
         tran_id: tranId, // use unique tran_id for each api call
-        success_url: `http://https://laptop-gallery-server-nine.vercel.app/payment/success/${tranId}`,
-        fail_url: `http://https://laptop-gallery-server-nine.vercel.app/payment/fail/${tranId}`,
-        cancel_url: `http://https://laptop-gallery-server-nine.vercel.app/payment/cancel/${tranId}`,
+        success_url: `http://localhost:5173/payment/success/${tranId}`,
+        fail_url: `http://localhost:5173/payment/fail/${tranId}`,
+        cancel_url: `http://localhost:5173/payment/cancel/${tranId}`,
         ipn_url: 'http://localhost:3030/ipn',
         shipping_method: 'Courier',
         product_name: 'Computer.',
@@ -98,7 +98,7 @@ router.post("/", async (req, res) => {
             paidStatues: false
 
         }
-        console.log("final",finalOrderDataSave)
+        console.log("final", finalOrderDataSave)
 
         const result = paymentsCollection.insertOne(finalOrderDataSave)
 
@@ -236,7 +236,7 @@ router.post("/success/:tranId", async (req, res) => {
 
 
         // Redirect the user to the success page
-        res.redirect(`http://https://laptop-gallery-server-nine.vercel.app/payment/success/${tranId}`);
+        res.redirect(`http://localhost:5173/payment/success/${tranId}`);
     }
 });
 
@@ -273,9 +273,9 @@ router.post("/cancel/:tranId", async (req, res) => {
 
 router.get("/", async (req, res) => {
     const result = await paymentsCollection.find().toArray();
- 
+
     res.send(result);
-  });
-  
+});
+
 
 module.exports = router;
