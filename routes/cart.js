@@ -24,10 +24,8 @@ router.get('/', async (req, res) => {
 })
 
 router.get('/:email', async (req, res) => {
-  // const email = req.query.email
-  // const query = { email: email }
   const query = { email: req.params.email }
-  const result = await cartsCollection.find(query).toArray();
+  const result = await cartsCollection.find(query).sort({ _id: -1 }).toArray();
   res.send(result)
 })
 

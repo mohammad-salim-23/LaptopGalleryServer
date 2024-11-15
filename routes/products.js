@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
 
   try {
     // Use the dynamic filter to fetch products from the collection
-    const products = await productsCollection.find(filter).toArray();
+    const products = await productsCollection.find(filter).sort({ _id: -1 }).toArray();
     res.json(products);
   } catch (error) {
     console.error(error);
